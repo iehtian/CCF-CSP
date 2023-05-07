@@ -36,4 +36,5 @@ int main(){
         printf("%d ", res);
     }
     printf("%d", (m - xiangcheng[n - 1]) / c[n - 1]);
+    
 }
