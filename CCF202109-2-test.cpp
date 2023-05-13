@@ -1,8 +1,5 @@
 #include<algorithm>
 #include<iostream>
-#include<unordered_set>
-#include<unordered_map>
-#include<set>
 using namespace std;
 int feiling(int a[],int k,int n,int i){
     if (n-k==1&&a[k]!=0)
@@ -57,45 +54,21 @@ int main(){
     int n;
     cin >> n;
     int ma = -1;
-    int a[n],b[n];
+    int a[n];
     for (int i = 0; i < n; i++)
     {
         scanf("%d", &a[i]);
-        b[i] = a[i];
-        // ma = max(ma, a[i]);
+        ma = max(ma, a[i]);
     }
-    sort(b, b + n);
-    int siz = unique(b, b + n) - b;
-    // if (ma==0)
-    // {
-    //     printf("0");
-    //     return 0;
-    // }
-    int mm = 0;
-    for (int i = 0; i < siz;i++)
+    if (ma==0)
     {
-        int con = 0;
-        for (int j = 0; j < n-1; j++)
-        {
-            if (a[j]!=0&&a[j+1]==0)
-            {
-                con++;
-            }
-            if (a[j]==b[i])
-            {
-                a[j] = 0;
-            }
-            
-        }
-        if (a[n-2]==0&&a[n-1]!=0)
-            {
-                con++;
-            }
-            if (a[n-1]==b[i])
-            {
-                a[n-1] = 0;
-            }
-            mm = max(mm, con);
+        printf("0");
+        return 0;
+    }
+    int mm = -1;
+    for (int i = 0; i < ma; i++)
+    {
+        mm = max(mm, feiling(a, 0, n, i));
     }
     cout << mm;
 }

@@ -11,18 +11,19 @@ int main(){
     {
         cin >> a[i];
     }
-    int b[n + 1];
+    int b[n + 1],res=0;
     unordered_map<int, int> mp;
     for (int i = 0; i < x; i++)
     {
         int *p = upper_bound(a, a + n + 1, i);
         mp[p - a-1]++;
+        res += p - a - 1;
     }
     // system("pause");
-    int res = 0;
-    for (unordered_map<int,int>::iterator it = mp.begin(); it != mp.end(); it++)
-    {
-        res += it->first * it->second;
-    }
+    
+    // for (unordered_map<int,int>::iterator it = mp.begin(); it != mp.end(); it++)
+    // {
+    //     res += it->first * it->second;
+    // }
     cout << res;
 }
