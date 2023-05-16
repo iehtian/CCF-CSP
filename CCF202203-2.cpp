@@ -18,12 +18,8 @@ int main(){
         cin >> x;
         int time = x + k;
         int *p = lower_bound(a+t, a + n, time);
-        // int c[n];
         t = p - a;
         memcpy(c, b, sizeof(b));
-        // sort(c + t, c + n);
-        // int *q = lower_bound(c + t, c + n, time);
-        // int con = q - c - t;
         int con = 0;
         for (int j = p-a; j < n; j++)
         {
