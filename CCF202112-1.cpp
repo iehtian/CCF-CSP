@@ -19,11 +19,5 @@ int main(){
         mp[p - a-1]++;
         res += p - a - 1;
     }
-    // system("pause");
-    
-    // for (unordered_map<int,int>::iterator it = mp.begin(); it != mp.end(); it++)
-    // {
-    //     res += it->first * it->second;
-    // }
     cout << res;
 }

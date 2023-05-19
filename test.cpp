@@ -1,22 +1,26 @@
-#include <iostream>
+#include<iostream>
+#include<algorithm>
+#include<unordered_map>
+#include<string.h>
 using namespace std;
-const int N = 10100;
-int n, m, q;
-int s[N][N];
-int main()
-{
-    scanf("%d%d%d", &n, &m, &q);
-    for (int i = 1; i <= n; i ++ )
-        for (int j = 1; j <= m; j ++ )
-            scanf("%d", &s[i][j]);
-    for (int i = 1; i <= n; i ++ )
-        for (int j = 1; j <= m; j ++ )
-            s[i][j] += s[i - 1][j] + s[i][j - 1] - s[i - 1][j - 1];
-    while (q -- )
+int main(){
+    int n, x;
+    scanf("%d%d", &n, &x);
+    int a[n+1],c[n+1];
+    a[0] = 0;
+    c[0] = 0;
+    for (int i = 1; i < n+1; i++)
     {
-        int x1, y1, x2, y2;
-        scanf("%d%d%d%d", &x1, &y1, &x2, &y2);
-        printf("%d\n", s[x2][y2] - s[x1 - 1][y2] - s[x2][y1 - 1] + s[x1 - 1][y1 - 1]);
+        cin >> c[i];
     }
-    return 0;
+    memcpy(a, c, (n+1)*sizeof(int));
+    int b[n + 1],res=0;
+    unordered_map<int, int> mp;
+    for (int i = 0; i < x; i++)
+    {
+        int *p = upper_bound(a, a + n + 1, i);
+        mp[p - a-1]++;
+        res += p - a - 1;
+    }
+    cout << res;
 }

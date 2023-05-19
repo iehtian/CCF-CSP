@@ -25,9 +25,10 @@ bool cmp(shu s1,shu s2){
     }
 }
 int main(){
-    int n,l,s;
+    int n,l,s,c;
     cin >> n >> l >> s;
     n++;
+    c = l;
     shu sh[n];
     for (int i = 1; i < n; i++)
     {
@@ -56,6 +57,7 @@ int main(){
     {
         int c1 = sh[i].x, c2 = sh[i].y;
         l = l - c1;
+        c -= c2;
         b1[i] = b1[i] - c1;
         b2[i] = b2[i] - c2;
         for (int j = i; j < n; j++)
@@ -74,7 +76,12 @@ int main(){
         int j = i;
         while (j<n&&d>0&&tag==0)
         {
-            if (sh[j].x>s||sh[j].y>s||l<s)
+            if (sh[j].y<0)
+            {
+                j++;
+                continue;
+            }
+            if (sh[j].x>s||sh[j].y>s||l<s||c<s)
             {
                 j++;
                 tag = 1;

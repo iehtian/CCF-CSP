@@ -8,7 +8,6 @@ struct project
     vector<int> nex;
     int zuizao, zuiwan;
 };
-
 int main(){
     int day, num;
     scanf("%d%d", &day, &num);
@@ -65,7 +64,7 @@ int main(){
             continue;
         }
         else{
-            int mi = 200;
+            int mi = 1000;
             for (vector<int>::iterator it=pro[i].nex.begin(); it!=pro[i].nex.end(); it++)
             {
                 mi = min(mi, pro[*it].zuiwan - pro[i].needday);
