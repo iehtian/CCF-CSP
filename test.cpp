@@ -1,26 +1,27 @@
 #include<iostream>
-#include<algorithm>
-#include<unordered_map>
-#include<string.h>
 using namespace std;
-int main(){
-    int n, x;
-    scanf("%d%d", &n, &x);
-    int a[n+1],c[n+1];
-    a[0] = 0;
-    c[0] = 0;
-    for (int i = 1; i < n+1; i++)
+const int N = 1e5 + 10;
+int a[N],b[N]; 
+int main()
+{
+    int n,m;
+    scanf("%d%d", &n, &m);
+    for(int i = 1;i <= n; i++) 
     {
-        cin >> c[i];
+        scanf("%d", &a[i]);
+        b[i] = a[i] - a[i - 1];      //构建差分数组
     }
-    memcpy(a, c, (n+1)*sizeof(int));
-    int b[n + 1],res=0;
-    unordered_map<int, int> mp;
-    for (int i = 0; i < x; i++)
+    int l, r, c;
+    while(m--)
     {
-        int *p = upper_bound(a, a + n + 1, i);
-        mp[p - a-1]++;
-        res += p - a - 1;
+        scanf("%d%d%d", &l, &r, &c);
+        b[l] += c;     //表示将序列中[l, r]之间的每个数加上c
+        b[r + 1] -= c;
     }
-    cout << res;
+    for(int i = 1;i <= n; i++) 
+    {
+        b[i] += b[i - 1];  //求前缀和运算
+        printf("%d ",b[i]);
+    }
+    return 0;
 }
