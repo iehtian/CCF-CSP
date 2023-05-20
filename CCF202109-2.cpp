@@ -1,37 +1,30 @@
-#include<iostream>
 #include<algorithm>
+#include<iostream>
 using namespace std;
-int mi =1000000,judge=0;
-int jianshu(int a[],int i,int res,int m){
-    int k = res + a[i];
-    if (k> m)
-    {
-        mi = min(mi, k);
-        return mi;
-    }
-    else if (k==m)
-    {
-        mi = k;
-        return mi;
-    }
-    else if (k<m)
-    {
-        if (i==0)
-        {
-            return mi;
-        }
-        jianshu(a, i - 1, k, m);
-        jianshu(a, i-1, res, m);
-    }
-}
 int main(){
-    int n,m;
-    cin >> n >> m;
-    int a[n];
-    for (int i = 0; i < n; i++)
+    int n;
+    cin >> n;
+    int a[n+1];
+    for (int i = 1; i < n+1; i++)
     {
         cin >> a[i];
     }
-    int res = jianshu(a, n - 1, 0, m);
+    a[0] = 0;
+    int d[1000000] = {0};
+    for (int i = 1; i < n+1; i++)
+    {
+        if (a[i-1]<a[i])
+        {
+            d[a[i - 1]]++;
+            d[a[i]]--;
+        }
+    }
+    int res = -1;
+    res = max(res, d[0]);
+    for (int i = 1; i < 1000000; i++)
+    {
+        d[i] += d[i - 1];
+        res = max(res, d[i]);
+    }
     cout << res;
 }

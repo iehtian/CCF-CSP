@@ -50,9 +50,7 @@ int main(){
             {
                 res += (abs(g[i] - itt->second)) * (itt->first % r + 1);
             }
-            
         }
-        
     }
     cout << res;
 }
