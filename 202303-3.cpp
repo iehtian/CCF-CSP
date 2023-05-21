@@ -4,8 +4,54 @@
 #include<queue>
 #include<set>
 using namespace std;
-void jisuan(map<int,map<int,int> mp,int first,int second,set<int> se){
-
+void jisuan(map < int, map<int, int>> mp,set<int> &se,int first,int second,int tag,int tt){
+    
+    for (map<int,map<int,int>>::iterator it = mp.begin(); it!=mp.end(); it++)
+    {
+        if (it->second.find(first)!=it->second.end())
+        {
+            if (it->second[first]==second)
+            {
+                if (tag==0)
+                {
+                    se.insert(it->first);
+                }
+            }
+            else{
+                if (tag==1)
+                {
+                    se.insert(it->first);
+                }
+            }
+        }
+    }
+    if (tt==2)
+    {
+        for (set<int>::iterator it = se.begin(); it != se.end(); it++)
+        {
+            if (mp[*it].find(first)!=mp[*it].end())
+            {
+                if (mp[*it][first]==second)
+                {
+                    if (tag==0)
+                    {
+                        continue;
+                    }
+                    else 
+                    {
+                        se.erase(it);
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+    }
+    
+    
+    
 }
 int main(){
     int n;
@@ -29,47 +75,63 @@ int main(){
     for (int i = 0; i < n; i++)
     {
         string s;
-        cin >> s;    
+        cin >> s;  
+        set<int> se;  
         int site;
-        site = s.find_first_of(":~");
-        int tag = 0;
-        if (s[site]=='~')
+        int tt = 0;
+        if (s[0]=='|')
         {
-            tag = 1;
+            tt = 1;
+            s.erase(s.begin());
         }
-        queue<int> q;
-        int first = stoi(s.substr(0, site)), second = stoi(s.substr(site + 1, s.length() - 1 - site));
-        for (map<int,map<int,int>>::iterator it = mp.begin(); it!=mp.end(); it++)
+        else if(s[0]=='&'){
+            tt = 2;
+            s.erase();
+        }
+        while (s.length()!=0)
         {
-            if (it->second.find(first)!=it->second.end())
+            int tag = 0;
+            int leftbracket = s.find("(");
+            int rightbracket = s.find(")");
+            site = s.find_first_of(":~");
+            if (leftbracket==-1)
             {
-                if (it->second[first]==second)
+                if (s[site]=='~')
                 {
-                    if (tag==0)
-                    {
-                        q.push(it->first);
-                    }
+                    tag = 1;
                 }
-                else{
-                    if (tag==1)
-                    {
-                        q.push(it->first);
-                    }
-                }
+                int first = stoi(s.substr(0, site));
+                int second = stoi(s.substr(site + 1, s.length() - site - 1));
+                jisuan(mp, se, first, second,tag);
+                break;
             }
+            
+            int first = stoi(s.substr(leftbracket+1,site-leftbracket));
+            int second = stoi(s.substr(site + 1, rightbracket - site));
+            
+            s.erase(s.begin(), s.begin() + rightbracket + 1);
+            if (s[site]=='~')
+            {
+                tag = 1;
+            }
+            // if (tt==0||tt==1)
+            // {
+            //     /* code */
+            // }
+            jisuan(mp, se, first, second,tag);
         }
-        if (q.size()==0)
+        if (se.size()==0)
         {
             cout << endl;
             // continue;
         }
         else{
-            cout << q.front();
-            q.pop();
-            while (q.empty()==false)
+            set<int>::iterator it = se.begin();
+            cout << *it;
+            it++;
+            for (; it != se.end(); it++)
             {
-                cout << " " << q.front();
-                q.pop();
+                cout << " " << *it;
             }
             cout << endl;
         }
