@@ -25,33 +25,45 @@ void jisuan(map < int, map<int, int>> mp,set<int> &se,int first,int second,int t
             }
         }
     }
-    if (tt==2)
+}
+bool qie(map < int, map<int, int>> mp,set<int> &se,vector<int> ff,vector<int> ss,vector<int> tag){
+    vector<int> ve;
+    for (set<int>::iterator it = se.begin(); it != se.end(); it++)
     {
-        for (set<int>::iterator it = se.begin(); it != se.end(); it++)
+        ve.push_back(*it);
+    }
+    se.clear();
+    for (int i = 0; i < ve.size(); i++)
+    {
+        for (int j = 0; j < ff.size(); j++)
         {
-            if (mp[*it].find(first)!=mp[*it].end())
+            if (mp[ve[i]].find(ff[j])==mp[ve[i]].end())
             {
-                if (mp[*it][first]==second)
-                {
-                    if (tag==0)
-                    {
-                        continue;
-                    }
-                    else 
-                    {
-                        se.erase(it);
-                        
-                    }
-                    
-                }
-                
+                ve[i] = -1;
+                continue;
             }
-            
+            if (mp[ve[i]][ff[j]]==ss[j])
+            {
+                if (tag[j]==1)
+                {
+                    ve[i] = -1;
+                }
+            }
+            else{
+                if (tag[j]==0)
+                {
+                    ve[i] = -1;
+                }
+            }
         }
     }
-    
-    
-    
+    for (int i = 0; i < ve.size(); i++)
+    {
+        if (ve[i]>=0)
+        {
+            se.insert(ve[i]);
+        }
+    }
 }
 int main(){
     int n;
@@ -86,8 +98,9 @@ int main(){
         }
         else if(s[0]=='&'){
             tt = 2;
-            s.erase();
+            s.erase(s.begin());
         }
+        vector<int> ff, ss,tagg;
         while (s.length()!=0)
         {
             int tag = 0;
@@ -102,23 +115,24 @@ int main(){
                 }
                 int first = stoi(s.substr(0, site));
                 int second = stoi(s.substr(site + 1, s.length() - site - 1));
-                jisuan(mp, se, first, second,tag);
+                jisuan(mp, se, first, second,tag,tt);
                 break;
             }
-            
             int first = stoi(s.substr(leftbracket+1,site-leftbracket));
             int second = stoi(s.substr(site + 1, rightbracket - site));
-            
-            s.erase(s.begin(), s.begin() + rightbracket + 1);
             if (s[site]=='~')
             {
                 tag = 1;
             }
-            // if (tt==0||tt==1)
-            // {
-            //     /* code */
-            // }
-            jisuan(mp, se, first, second,tag);
+            s.erase(s.begin(), s.begin() + rightbracket + 1);
+            ff.push_back(first);
+            ss.push_back(second);
+            tagg.push_back(tag);
+            jisuan(mp, se, first, second,tag,tt);
+            if (tt==2)
+            {
+                qie(mp, se, ff, ss, tagg);
+            }
         }
         if (se.size()==0)
         {
