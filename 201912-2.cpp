@@ -11,7 +11,15 @@ int main(){
     {
         int c, b;
         cin >> c >> b;
-        mp[c]
+        mp[c][b] = 1;
+    }
+    for (unordered_map<int,unordered_map<int,int>>::iterator it = mp.begin(); it != mp.end(); it++)
+    {
+        if (mp[it->first].f)
+        {
+            /* code */
+        }
+        
     }
     
 }
