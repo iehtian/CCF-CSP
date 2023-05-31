@@ -8,6 +8,12 @@
 #include<string>
 #include<string.h>
 using namespace std;
+const int maxnum=1e9;
+struct shuju
+{
+    int shang, yu;
+};
+
 int main(){
     int n,d;
     cin>>n>>d;
@@ -57,17 +63,22 @@ int main(){
             }
         }
     }
-    long long qk[n][n],res[n][d];
+    // long long qk[n][n],res[n][d];
+    shuju qkk[n][n];
     int iii=0;
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < n; j++)
         {
-            qk[i][j]=0;
+            // qk[i][j]=0;
+            long long tem = 0;
             for (int jjj = 0; jjj < d; jjj++)
             {
-                qk[i][j]+=q[i][jjj]*zhuanzhi[jjj][iii];
+                
+                tem+=q[i][jjj]*zhuanzhi[jjj][iii];
             }
+            qkk[i][j].shang = tem / maxnum;
+            qkk[i][j].yu = tem % maxnum;
             iii++;
             if (iii%n==0)
             {
@@ -80,7 +91,11 @@ int main(){
     {
         for (int j = 0; j < n; j++)
         {
-            qk[i][j]*=w[ii];
+            long long tem = qkk[i][j].shang * maxnum + qkk[i][j].yu;
+            // qk[i][j]*=w[ii];
+            tem *= w[ii];
+            qkk[i][j].shang = tem / maxnum;
+            qkk[i][j].yu = tem % maxnum;
         }
         ii++;
     }
@@ -89,24 +104,28 @@ int main(){
     {
         for (int j = 0; j < d; j++)
         {
-            res[i][j]=0;
-                for (int jjj = 0; jjj < n; jjj++)
-                {
-                    res[i][j]+=qk[i][jjj]*v[jjj][iii];
+            long long res = 0;
+            for (int jjj = 0; jjj < n; jjj++)
+            {
+                long long tem = qkk[i][jjj].shang * maxnum + qkk[i][jjj].yu;
+                res += tem * v[jjj][iii];
+                
                 }
-                 iii++;
+                cout << res << " ";
+                iii++;
                 if (iii%d==0)
                 {
                     iii=0;
                 }
         }
-    }
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < d; j++)
-        {
-            cout<<res[i][j]<<" ";
-        }
         cout<<endl;
     }
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = 0; j < d; j++)
+    //     {
+    //         cout<<res[i][j]<<" ";
+    //     }
+    //     cout<<endl;
+    // }
 }
